@@ -2,7 +2,6 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/calib3d.hpp>
-#include <iostream>
 
 cv::Point3f sphere_to_cartesian(const float ro, const float theta, const float phi);
 cv::Point3f cartesian_to_sphere(const cv::Point3f &point);

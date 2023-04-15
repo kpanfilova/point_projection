@@ -2,7 +2,6 @@
 #include <iostream>
 #include "headers.hpp"
 
-
 int main()
 {
     cv::Point point_in_a_uv(1000, 539);

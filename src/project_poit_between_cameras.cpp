@@ -33,8 +33,8 @@ cv::Point project_point_between_cameras(const cv::Point &point_in_a_uv, float di
     cv::Rodrigues(rotation_vector_b, rotation_matrix_b);
  
     // ro, phi, theta from a_uv; ro = distance_to_a
-    float theta = 2 * CV_PI * (point_in_a_uv.x) / img_width; //longitude (0; 2pi) (point_in_a_uv.x / img_width -> [0; 1])
-    float phi = CV_PI * (point_in_a_uv.y) / img_height; // latitude (0; pi)
+    float theta = 2 * CV_PI * point_in_a_uv.x / img_width; //longitude (0; 2pi) (point_in_a_uv.x / img_width -> [0; 1])
+    float phi = CV_PI * point_in_a_uv.y / img_height; // latitude (0; pi)
 
     // convert ro, phi, theta to xyz
     // center (0,0,0) is Camera A
@@ -59,6 +59,4 @@ cv::Point project_point_between_cameras(const cv::Point &point_in_a_uv, float di
     float v2 = new_point_b.z * img_height / CV_PI;
     
     cv::Point result(static_cast<int>(u2), static_cast<int>(v2));
-
-    return result;
 }

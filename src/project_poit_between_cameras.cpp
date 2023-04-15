@@ -59,4 +59,5 @@ cv::Point project_point_between_cameras(const cv::Point &point_in_a_uv, float di
     float v2 = new_point_b.z * img_height / CV_PI;
     
     cv::Point result(static_cast<int>(u2), static_cast<int>(v2));
+    return result;
 }

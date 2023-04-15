@@ -37,15 +37,15 @@ cv::Point project_point_between_cameras(const cv::Point &point_in_a_uv, float di
     float phi = CV_PI * point_in_a_uv.y / img_height; // latitude (0; pi)
 
     // convert ro, phi, theta to xyz
-    // center (0,0,0) is Camera A
+    // now center (0,0,0) is Camera A
     cv::Point3f point_a = sphere_to_cartesian(distance_to_a, theta, phi);
     
     // rotate xyz with rotation of camera A
-    cv::Mat xyz_rot = rotation_matrix_a * (convert_degree_to_radian(point_a));
+    cv::Mat xyz_rot = rotation_matrix_a * (cv::Mat_<float>(3,1) << point_a.x, point_a.y, point_a.z);
     cv::Point3f rot_point(xyz_rot);
     
     // change original coord to center of Camera B
-    cv::Point3f change_point = rot_point - (location_a - location_b);
+    cv::Point3f change_point = rot_point + (location_b - location_a);
     
     // rotate xyz with rotation of camera B
     xyz_rot = rotation_matrix_b.t() * (cv::Mat_<float>(3,1) << change_point.x, change_point.y, change_point.z);
@@ -55,7 +55,7 @@ cv::Point project_point_between_cameras(const cv::Point &point_in_a_uv, float di
     cv::Point3f new_point_b = cartesian_to_sphere(rot_point_b);
     
     // sphere coord to uv
-    float u2 = new_point_b.y * img_width / (2 * CV_PI); //longitude (0; 2pi)
+    float u2 = new_point_b.y * img_width / (2 * CV_PI);
     float v2 = new_point_b.z * img_height / CV_PI;
     
     cv::Point result(static_cast<int>(u2), static_cast<int>(v2));

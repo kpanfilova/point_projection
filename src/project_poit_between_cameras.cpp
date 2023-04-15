@@ -50,8 +50,8 @@ cv::Point project_point_between_cameras(const cv::Point &point_in_a_uv, float di
     // rotate xyz with rotation of camera B
     xyz_rot = rotation_matrix_b.t() * (cv::Mat_<float>(3,1) << change_point.x, change_point.y, change_point.z);
     cv::Point3f rot_point_b(xyz_rot);
-    
-    // to sphere coordinte;
+
+    // to sphere coordinte; (ro, theta, phi)
     cv::Point3f new_point_b = cartesian_to_sphere(rot_point_b);
     
     // sphere coord to uv
@@ -59,5 +59,4 @@ cv::Point project_point_between_cameras(const cv::Point &point_in_a_uv, float di
     float v2 = new_point_b.z * img_height / CV_PI;
     
     cv::Point result(static_cast<int>(u2), static_cast<int>(v2));
-    return result;
 }
